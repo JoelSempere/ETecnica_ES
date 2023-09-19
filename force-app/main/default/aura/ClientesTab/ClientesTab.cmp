@@ -1,0 +1,47 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:lightningQuickActionWithoutHeader,force:hasRecordId,force:hasSObjectName,force:appHostable,lightning:isUrlAddressable" 
+access="global" controller="ClientesTabController">
+
+<aura:attribute name="clientes" type="List" />
+<aura:attribute name="cliente" type="Cliente__c" default="{}"/>
+<aura:attribute name="isLoading" type="Boolean"/>
+<aura:attribute name="columns" type="List"/>
+
+<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+<lightning:card iconName="custom:custom3" title="Clientes" >
+
+    <aura:if isTrue="{!v.isLoading}">
+            <lightning:spinner alternativeText="Loading" size="large" variant="brand"/>
+    </aura:if> 
+    
+    <lightning:layout horizontalAlign="left"  multipleRows="true">
+
+        <lightning:layoutItem size="6" smallDeviceSize="12" mediumDeviceSize="6" largeDeviceSize="6" padding="around-small" flexibility="auto">
+            <lightning:input  aura:Id="field" name="name" label="Nombre" required="true" value="{!v.cliente.Name}"/>    
+        </lightning:layoutItem>
+
+        <lightning:layoutItem size="6" smallDeviceSize="12" mediumDeviceSize="6" largeDeviceSize="6" padding="around-small" flexibility="auto">
+            <lightning:input  aura:Id="field" name="surname" label="Apellidos" required="true" value="{!v.cliente.Apellido__c}"/>         
+        </lightning:layoutItem>
+
+        <lightning:layoutItem size="6" smallDeviceSize="12" mediumDeviceSize="6" largeDeviceSize="6" padding="around-small" flexibility="auto">
+            <lightning:input aura:Id="field" type="email" name="email" label="Email" required="true" value="{!v.cliente.Email__c}"/>           
+        </lightning:layoutItem>
+
+        <lightning:layoutItem size="6" smallDeviceSize="12" mediumDeviceSize="6" largeDeviceSize="6" padding="around-small" flexibility="auto">
+            <lightning:input aura:Id="field" name="phone" label="Teléfono" required="true" value="{!v.cliente.Telefono__c}"/>                 
+        </lightning:layoutItem>
+        <lightning:layoutItem size="2" padding="around-small" flexibility="auto">
+            <lightning:button variant="brand" label="Guardar" title="save" onclick="{!c.handleSave}"/>             
+        </lightning:layoutItem>
+    </lightning:layout>
+    <lightning:datatable
+        keyField="id"
+        data="{!v.clientes}"
+        columns="{!v.columns}"
+        hideCheckboxColumn="false"
+        showRowNumberColumn="false" 
+    />
+</lightning:card>
+
+</aura:component>
